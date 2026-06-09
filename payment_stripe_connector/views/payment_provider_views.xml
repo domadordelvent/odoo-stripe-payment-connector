@@ -1,0 +1,12 @@
+<odoo>
+    <record id="payment_provider_form_stripe_connector" model="ir.ui.view">
+        <field name="name">payment.provider.form.stripe.connector</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="stripe_connector_reference"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,102 @@
+<odoo>
+    <record id="view_stripe_payment_list" model="ir.ui.view">
+        <field name="name">stripe.payment.list</field>
+        <field name="model">stripe.payment</field>
+        <field name="arch" type="xml">
+            <list string="Stripe Payments">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="state"/>
+                <field name="stripe_payment_intent_id"/>
+                <field name="stripe_status" readonly="1"/>
+                <field name="stripe_client_secret" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_stripe_payment_form" model="ir.ui.view">
+        <field name="name">stripe.payment.form</field>
+        <field name="model">stripe.payment</field>
+        <field name="arch" type="xml">
+            <form string="Stripe Payment">
+            <header>
+            <field name="state" widget="statusbar" statusbar_visible="draft,pending,paid,failed"/>
+                <button
+                    name="action_create_stripe_payment"
+                    type="object"
+                    string="Create Stripe Payment"
+                    class="btn-primary"/>
+            
+                <!-- <button
+                    name="action_mark_as_paid"
+                    type="object"
+                    string="Mark as Paid"
+                    class="btn-success"/>
+                <button
+                    name="action_mark_as_failed"
+                    type="object"
+                    string="Mark as Failed"
+                    class="btn-secondary"/> -->
+                <button
+                    name="action_check_stripe_status"
+                    type="object"
+                    string="Check Stripe Status"
+                    class="btn-info"/>
+                <button
+                    name="action_confirm_test_payment"
+                    type="object"
+                    string="Confirm Test Payment"
+                    class="btn-warning"/>
+            </header>
+                <sheet>
+
+                    <notebook>
+
+                        <page string="Payment">
+
+                            <group>
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="amount"/>
+                                <field name="currency_id"/>
+                            </group>
+
+                        </page>
+
+                        <page string="Stripe Data">
+
+                            <group>
+                                <field name="stripe_payment_intent_id" readonly="1"/>
+                                <field name="stripe_status" readonly="1"/>
+                                <field name="stripe_client_secret" readonly="1"/>
+                            </group>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stripe_payment" model="ir.actions.act_window">
+        <field name="name">Stripe Payments</field>
+        <field name="res_model">stripe.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_stripe_connector_root"
+        name="Stripe Connector"
+        sequence="30"/>
+
+    <menuitem
+        id="menu_stripe_payments"
+        name="Payments"
+        parent="menu_stripe_connector_root"
+        action="action_stripe_payment"
+        sequence="10"/>
+</odoo>
